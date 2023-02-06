@@ -6,4 +6,4 @@ from marketing.models.model_subscription import EmailSubscription
 class EmailSubscriptionCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmailSubscription
-        fields = ('email')
+        fields = ['email']

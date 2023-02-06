@@ -9,6 +9,8 @@ urlpatterns_api_v1 = [
     path('', include('portfolio.urls_api'), name='main_portfolio'),
     path('', include('page.urls_api'), name='main_page'),
     path('', include('forms.urls_api'), name='main_forms'),
+    path('', include('marketing.urls_api'), name='main_marketing'),
+    path('', include('dastres.urls_api'), name='main_dastres'),
 
 ]
 
