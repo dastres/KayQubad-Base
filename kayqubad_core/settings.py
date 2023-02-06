@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'project.apps.ProjectConfig',
     'portfolio.apps.PortfolioConfig',
     'page.apps.PageConfig',
+    'dastres.apps.DastresConfig',
+    'marketing.apps.MarketingConfig',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'kayqubad_core.urls'
@@ -127,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'fa'
 
 TIME_ZONE = 'UTC'
 
@@ -144,7 +147,7 @@ LANGUAGES = (
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale/')]
 
 # Config django-modeltranslation
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'fa'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
