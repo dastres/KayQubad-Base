@@ -10,7 +10,7 @@ class PostCategoryTranslationOptions(TranslationOptions):
 
 @register(Post)
 class PostTranslationOptions(TranslationOptions):
-    fields = ('title', 'content', 'category', 'status', 'is_active')
+    fields = ('title', 'content', 'short_description', 'category', 'status', 'is_active')
 
 
 @register(PostComment)
