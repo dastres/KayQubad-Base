@@ -17,7 +17,7 @@ class Post(Seo, BasicPost, DateBasic, Status, LanguageStatus):
     class Meta:
         verbose_name = _('Post')
         verbose_name_plural = _('Posts')
-
+    short_description = models.CharField(_("Short Discription"), max_length=50, null=True)
     category = models.ForeignKey(PostCategory, on_delete=models.CASCADE, related_name='posts',
                                  verbose_name=_('category'))
 
