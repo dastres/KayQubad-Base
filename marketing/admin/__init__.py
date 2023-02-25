@@ -1,1 +1,2 @@
 from marketing.admin.admin_subscription import EmailSubscriptionAdmin
+from .admin_user_comment import UserCommentAdmin

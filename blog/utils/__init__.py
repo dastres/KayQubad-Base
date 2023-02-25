@@ -1,0 +1,1 @@
+from .read_time_of_text import read_time
