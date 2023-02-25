@@ -1,1 +1,2 @@
 from .test_url_user_comment import UserCommentUrlTestCase
+from .test_url_email_subscription import EmailSubscriptionUrlTestCase
