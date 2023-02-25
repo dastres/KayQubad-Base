@@ -18,3 +18,7 @@ class UserCommentViewSet(viewsets.ModelViewSet):
         queryset = self.model.objects.all()
         return queryset
 
+    def get_permissions(self):
+        if self.action in ['update', 'partial', 'destroy', 'create']:
+            return [permissions.IsAdminUser()]
+        return super().get_permissions()
