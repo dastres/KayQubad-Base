@@ -157,3 +157,37 @@ class CategoryViewSetTestCase(APITestCase):
         response = self.client.put(path=path, data=self.update_valid_date)
 
         self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        # ------------------------------ Search ------------------------------------
+
+    def test_category_list_search_successes(self):
+        path = reverse("blog:category-list") + "?search=category+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content), 2)
+
+    def test_category_list_search_no_successes(self):
+        path = reverse("blog:category-list") + "?search=xoxoxoxo"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content), 1)
+        self.assertEquals(len(content), 0)
+
+        # ------------------------------ Filtering ------------------------------------
+
+    def test_category_list_filtering_successes(self):
+        path = reverse("blog:category-list") + "?title=category+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content), 1)
+
+    def test_category_list_filtering_no_successes(self):
+        path = reverse("blog:category-list") + "?title=xoxoxoxo"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content), 1)
+        self.assertEquals(len(content), 0)
