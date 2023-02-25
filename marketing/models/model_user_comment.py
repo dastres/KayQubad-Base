@@ -29,6 +29,9 @@ class UserComment(DateBasic, LanguageStatus):
                                                 MinValueValidator(0)
                                             ])
 
+    def __str__(self):
+        return self.name
+
     def save(self, *args, **kwargs):
         if not self.avatar_alt:
             self.avatar_alt = slugify(self.name)

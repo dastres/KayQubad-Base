@@ -1,0 +1,1 @@
+from .test_model_user_comment import UserCommentModelTestCase
