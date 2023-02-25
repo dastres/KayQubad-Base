@@ -1,6 +1,5 @@
-import readtime
-
+import math
 
 def read_time(content: str):
-    result = readtime.of_markdown(content)
-    return result
+    result = len(content.split()) / 200
+    return math.ceil(result)
