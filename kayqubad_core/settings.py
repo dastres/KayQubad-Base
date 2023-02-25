@@ -20,7 +20,6 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +39,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'modeltranslation',
+
+    'django_seed',  # TODO:for develop
 
     # my app
     'accounts.apps.AccountsConfig',
@@ -85,7 +86,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kayqubad_core.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -108,7 +108,6 @@ else:
         }
     }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -126,7 +125,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -157,7 +155,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 
 STATIC_ROOT = BASE_DIR / 'static'
-MEDIA_ROOT =  BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_DIRS = [
     BASE_DIR / "kayqubad_core" / "assets",
@@ -186,7 +184,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-
 # Config drf-spectacular
 SPECTACULAR_SETTINGS = {
     'TITLE': 'KeyQubad Base',
@@ -205,7 +202,6 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'Custom',
     }
 }
-
 
 # Config CORS
 CORS_ALLOW_ALL_ORIGINS = True
