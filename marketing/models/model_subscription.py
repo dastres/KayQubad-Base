@@ -9,3 +9,6 @@ class EmailSubscription(DateBasic):
 
 
     email = models.EmailField(_("Email Subscription"), max_length=254)
+
+    def __str__(self):
+        return self.email
