@@ -1,5 +1,6 @@
 # Core Django
 from django.db import models
+from django.template.defaultfilters import slugify
 from django.utils.translation import gettext_lazy as _
 
 # My App
@@ -20,3 +21,7 @@ class ProjectGallery(BasicGallery, DateBasic, Status):
 
     def __str__(self):
         return self.project.title
+
+    def save(self, *args, **kwargs):
+        self.image_alt = slugify(self.title)
+        super().save(*args, **kwargs)

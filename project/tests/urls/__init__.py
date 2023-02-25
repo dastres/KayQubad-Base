@@ -1,0 +1,2 @@
+from .test_url_category import CategoryUrlTestCase
+from .test_url_project import ProjectUrlTestCase
