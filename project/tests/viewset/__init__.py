@@ -1,0 +1,2 @@
+from .test_viewset_category import CategoryViewSetTestCase
+from .test_viewset_project import ProjectViewSetTestCase
