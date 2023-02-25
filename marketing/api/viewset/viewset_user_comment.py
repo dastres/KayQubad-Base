@@ -2,12 +2,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions, filters
 
 from marketing.models import UserComment
-from marketing.api.serializer import UserCommentListSerializer
+from marketing.api.serializer import UserCommentSerializer
 
 
 class UserCommentViewSet(viewsets.ModelViewSet):
     model = UserComment
-    serializer_class = UserCommentListSerializer
+    serializer_class = UserCommentSerializer
     permission_classes = [permissions.AllowAny]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
 
