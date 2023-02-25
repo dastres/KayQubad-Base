@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
@@ -20,17 +22,14 @@ class UserComment(DateBasic, LanguageStatus):
     avatar = models.ImageField(_('avatar'),
                                upload_to=f'marketing/user_comment/user_comment/avatar/{str(datetime.now().year)}/{str(datetime.now().month)}')
     avatar_alt = models.CharField(_('avatar alt'), max_length=350, blank=True)
-    rate = models.PositiveSmallIntegerField(_('rate'), default=0)
     content = RichTextUploadingField(_('content'))
-
-    def clean(self):
-        if not self.rate in [0, 1, 2, 3, 4, 5]:
-            ValidationError(_('The rate must be between 0 and 5'))
-
-        super().clean()
+    rate = models.IntegerField(_('rate'), default=0,
+                                            validators=[
+                                                MaxValueValidator(5),
+                                                MinValueValidator(0)
+                                            ])
 
     def save(self, *args, **kwargs):
         if not self.avatar_alt:
             self.avatar_alt = slugify(self.name)
-        self.full_clean()
         super().save(*args, **kwargs)
