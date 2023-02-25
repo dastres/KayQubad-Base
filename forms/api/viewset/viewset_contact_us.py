@@ -9,12 +9,12 @@ from forms.api.serializer.serializer_detail_contact_us import DetailContactUsSer
 from forms.api.serializer.serializer_create_update_contact_us import CreateUpdateContactUsSerializer
 
 
-class ContactUsViewSet(viewsets.ReadOnlyModelViewSet):
+class ContactUsViewSet(viewsets.ModelViewSet):
     model = ContactUs
     lookup_field = 'pk'
 
     serializer_class = DetailContactUsSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
 
     search_fields = ['name', 'email', 'phone_number']
@@ -30,3 +30,8 @@ class ContactUsViewSet(viewsets.ReadOnlyModelViewSet):
         elif self.action in ['create', 'update', 'partial_update']:
             return CreateUpdateContactUsSerializer
         return self.serializer_class
+
+    def get_permissions(self):
+        if self.action in ['update', 'partial', 'destroy', 'list']:
+            return [permissions.IsAdminUser()]
+        return super().get_permissions()
