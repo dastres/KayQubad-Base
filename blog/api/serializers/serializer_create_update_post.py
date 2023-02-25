@@ -6,5 +6,5 @@ class CreateUpdatePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = (
-            'title', 'content', 'slug', 'thumbnail', 'thumbnail_alt', 'category', 'is_active'
+            'title', 'content', 'short_description', 'slug', 'thumbnail', 'thumbnail_alt', 'category', 'is_active'
         )
