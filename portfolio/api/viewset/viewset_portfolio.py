@@ -12,7 +12,7 @@ from portfolio.api.serializer.serializer_portfolio_create_update import Portfoli
 class PortfolioViewSet(viewsets.ModelViewSet):
     queryset = Portfolio.objects.all()
     serializer_class = PortfolioDetailSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Todo: CustomPermission => AuthorPermission
+    permission_classes = [permissions.AllowAny]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'slug', 'author__username', 'category__title', 'category__slug']
     filterset_fields = ['title', 'slug', 'category__title', 'category__slug', 'author__username']
@@ -29,3 +29,8 @@ class PortfolioViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         serializer.save(author=self.request.user)
+
+    def get_permissions(self):
+        if self.action in ['update', 'partial', 'destroy', 'create']:
+            return [permissions.IsAdminUser()]
+        return super().get_permissions()

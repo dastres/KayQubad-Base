@@ -1,0 +1,3 @@
+from .test_model_category import CategoryModelTestCase
+from .test_model_portfolio import PortfolioModelTestCase
+from .test_model_gallery import GalleryModelTestCase

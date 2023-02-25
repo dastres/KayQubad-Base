@@ -4,7 +4,7 @@ from portfolio.api.serializer.serializer_base_category import BaseCategorySerial
 
 
 class CategoryListSerializer(serializers.ModelSerializer):
-    categories = BaseCategorySerializer()
+    categories = BaseCategorySerializer(many=True)
 
     class Meta:
         model = PortfolioCategory

@@ -12,7 +12,7 @@ from portfolio.api.serializer.serializer_portfolio_category_detail import Catego
 class PortfolioCategoryViewSet(viewsets.ModelViewSet):
     queryset = PortfolioCategory.objects.all()
     serializer_class = CategoryDetailSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Todo: CustomPermission => AuthorPermission
+    permission_classes = [permissions.AllowAny]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'slug', 'sub_category__title']
     filterset_fields = ['title', 'slug', 'sub_category__title']
@@ -23,3 +23,8 @@ class PortfolioCategoryViewSet(viewsets.ModelViewSet):
         elif self.action in ['create', 'update', 'partial_update']:
             return CategoryCreateUpdateSerializer
         return super().get_serializer_class()
+
+    def get_permissions(self):
+        if self.action in ['update', 'partial', 'destroy', 'create']:
+            return [permissions.IsAdminUser()]
+        return super().get_permissions()
