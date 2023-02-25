@@ -12,6 +12,6 @@ class ListPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = (
-            'id', 'title', 'slug', 'thumbnail', 'thumbnail_alt',
-            'status', 'author', 'category', 'get_created_at', 'get_updated_at'
+            'id', 'title', 'slug', 'thumbnail', 'thumbnail_alt','short_description',
+            'status', 'author', 'category', 'get_created_at', 'get_updated_at','is_active','status'
         )
