@@ -1,0 +1,1 @@
+from .test_url_category import CategoryUrlTestCase
