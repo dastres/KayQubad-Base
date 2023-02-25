@@ -1,0 +1,3 @@
+from .serializer_page_list import PageListSerializer
+from .serializer_page_detail import PageDetailSerializer
+from .serializer_page_create_update import PageCreateUpdateSerializer
