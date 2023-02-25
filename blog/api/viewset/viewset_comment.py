@@ -30,3 +30,10 @@ class PostCommentViewSet(viewsets.ModelViewSet):
         elif self.action == 'list':
             return ListCommentSerializer
         return self.serializer_class
+
+    def get_permissions(self):
+        if self.action in ['update', 'partial', 'destroy']:
+            return [permissions.IsAdminUser()]
+        elif self.action == 'create':
+            return [permissions.IsAuthenticated()]
+        return super().get_permissions()

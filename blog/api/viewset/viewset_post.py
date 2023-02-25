@@ -37,3 +37,8 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         serializer.save(author=self.request.user)
+
+    def get_permissions(self):
+        if self.action in ['update', 'partial', 'destroy', 'create']:
+            return [permissions.IsAdminUser()]
+        return super().get_permissions()

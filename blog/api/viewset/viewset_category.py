@@ -29,3 +29,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
         elif self.action in ['create', 'update', 'partial_update']:
             return CreateUpdateCategorySerializer
         return super().get_serializer_class()
+
+    def get_permissions(self):
+        if self.action in ['update', 'partial', 'destroy', 'create']:
+            return [permissions.IsAdminUser()]
+        return super().get_permissions()
