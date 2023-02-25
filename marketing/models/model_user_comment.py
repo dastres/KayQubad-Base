@@ -19,7 +19,7 @@ class UserComment(DateBasic, LanguageStatus):
 
     name = models.CharField(_('name'), max_length=350)
     company = models.CharField(_('company'), max_length=20)
-    avatar = models.ImageField(_('avatar'),
+    avatar = models.ImageField(_('avatar'),blank=True,null=True,
                                upload_to=f'marketing/user_comment/user_comment/avatar/{str(datetime.now().year)}/{str(datetime.now().month)}')
     avatar_alt = models.CharField(_('avatar alt'), max_length=350, blank=True)
     content = RichTextUploadingField(_('content'))
@@ -28,6 +28,9 @@ class UserComment(DateBasic, LanguageStatus):
                                                 MaxValueValidator(5),
                                                 MinValueValidator(0)
                                             ])
+
+    def __str__(self):
+        return self.name
 
     def save(self, *args, **kwargs):
         if not self.avatar_alt:

@@ -1,0 +1,2 @@
+from .test_model_user_comment import UserCommentModelTestCase
+from .test_model_email_subscription import EmailSubscriptionModelTestCase
