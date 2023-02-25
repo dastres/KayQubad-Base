@@ -1,1 +1,2 @@
 from .test_viewset_user_comment import UserCommentViewSetTestCase
+from .test_viewset_email_subscribe import EmailSubscriptionViewSetTestCase
