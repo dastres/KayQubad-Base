@@ -1,6 +1,9 @@
 # 3rd Party
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, permissions, filters
+from rest_framework import viewsets, permissions, filters, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 # My App
 from blog.models import PostComment
@@ -36,4 +39,32 @@ class PostCommentViewSet(viewsets.ModelViewSet):
             return [permissions.IsAdminUser()]
         elif self.action == 'create':
             return [permissions.IsAuthenticated()]
+        elif self.action in ['add_like', 'add_dislike']:
+            return [permissions.IsAuthenticated()]
         return super().get_permissions()
+
+    @action(detail=True, methods=['post'], name='add-like-comment')
+    def add_like(self, request, pk=None):
+        comment = get_object_or_404(PostComment, pk=pk)
+        if comment.dislike.filter(id=request.user.id).exists():
+            return Response('', status=status.HTTP_400_BAD_REQUEST)
+
+        if comment.likes.filter(id=request.user.id).exists():
+            comment.likes.remove(request.user)
+            return Response('Like Remove .', status=status.HTTP_200_OK)
+        else:
+            comment.likes.add(request.user)
+            return Response('Like Addd .', status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'], name='add-dislike-comment')
+    def add_dislike(self, request, pk=None):
+        comment = get_object_or_404(PostComment, pk=pk)
+        if comment.likes.filter(id=request.user.id).exists():
+            return Response('', status=status.HTTP_400_BAD_REQUEST)
+
+        if comment.dislike.filter(id=request.user.id).exists():
+            comment.dislike.remove(request.user)
+            return Response('Dislike Remove .', status=status.HTTP_200_OK)
+        else:
+            comment.dislike.add(request.user)
+            return Response('Dislike Add .', status=status.HTTP_200_OK)
