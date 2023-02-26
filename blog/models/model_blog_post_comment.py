@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from blog.models.model_blog_post import Post
@@ -16,9 +17,14 @@ class PostComment(BaseComment, Status, LanguageStatus):
                               blank=True, null=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments',
                              verbose_name=_('comment'))
-
-    like = models.PositiveIntegerField(_('Like'), default=0)
-    dislike = models.PositiveIntegerField(_('Dislike'), default=0)
+    likes = models.ManyToManyField(get_user_model(), verbose_name=_('Likes'), related_name='like_comments')
+    dislike = models.ManyToManyField(get_user_model(), verbose_name=_('Dislikes'), related_name='dislike_comments')
 
     def __str__(self):
         return self.name
+
+    def get_like(self):
+        return self.likes.count()
+
+    def get_dislike(self):
+        return self.dislike.count()
