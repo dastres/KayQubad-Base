@@ -11,7 +11,7 @@ class ListCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostComment
         fields = (
-            'name', 'email', 'reply', 'post', 'is_active', 'status'
+            'name', 'email','message', 'reply', 'post', 'is_active', 'status'
         )
 
     def get_reply(self, obj):
