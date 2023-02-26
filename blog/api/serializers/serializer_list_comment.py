@@ -5,11 +5,16 @@ from blog.api.serializers import BaseCommentSerializer, BasePostSerializer
 
 
 class ListCommentSerializer(serializers.ModelSerializer):
-    reply = BaseCommentSerializer()
     post = BasePostSerializer()
+    reply = serializers.SerializerMethodField(method_name='get_reply')
 
     class Meta:
         model = PostComment
         fields = (
             'name', 'email', 'reply', 'post', 'is_active', 'status'
         )
+
+    def get_reply(self, obj):
+        result = obj.post_comments.all()
+        serializer = BaseCommentSerializer(result, many=True)
+        return serializer.data

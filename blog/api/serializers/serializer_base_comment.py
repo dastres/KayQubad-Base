@@ -7,5 +7,5 @@ class BaseCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostComment
         fields = (
-            'id', 'name', 'email', 'message'
+            'name', 'email','message', 'is_active', 'status',
         )

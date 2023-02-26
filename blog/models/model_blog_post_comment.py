@@ -13,7 +13,7 @@ class PostComment(BaseComment, Status, LanguageStatus):
         verbose_name_plural = _('Comments')
 
     reply = models.ForeignKey('self', on_delete=models.CASCADE, related_name='post_comments', verbose_name=_('reply'),
-                              blank=True, null=True)
+                                  blank=True, null=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments',
                              verbose_name=_('comment'))
 
