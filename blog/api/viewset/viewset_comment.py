@@ -1,4 +1,5 @@
 # 3rd Party
+from django.core.cache import cache
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions, filters, status
@@ -27,6 +28,15 @@ class PostCommentViewSet(viewsets.ModelViewSet):
         queryset = self.model.objects.all()
         return queryset
 
+    # def get_queryset(self):
+    #     queryset = cache.get('all_comment')
+    #     if queryset is None:
+    #         queryset = self.model.objects.all()
+    #         cache.set('all_comment', queryset)
+    #
+    #     return queryset
+
+
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
             return CreateUpdateCommentSerializer
@@ -45,7 +55,11 @@ class PostCommentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], name='add-like-comment')
     def add_like(self, request, pk=None):
-        comment = get_object_or_404(PostComment, pk=pk)
+        comment = cache.get('comment')
+        if comment is None:
+            comment = PostComment.objects.get(pk=pk)
+            cache.set('comment', comment)
+
         if comment.dislike.filter(id=request.user.id).exists():
             return Response('', status=status.HTTP_400_BAD_REQUEST)
 
@@ -58,7 +72,11 @@ class PostCommentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], name='add-dislike-comment')
     def add_dislike(self, request, pk=None):
-        comment = get_object_or_404(PostComment, pk=pk)
+        comment = cache.get('comment')
+        if comment is None:
+            comment = PostComment.objects.get(pk=pk)
+            cache.set('comment', comment)
+
         if comment.likes.filter(id=request.user.id).exists():
             return Response('', status=status.HTTP_400_BAD_REQUEST)
 
