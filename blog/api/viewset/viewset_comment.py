@@ -1,4 +1,5 @@
 # 3rd Party
+from django.core.cache import cache
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions, filters, status
@@ -45,7 +46,11 @@ class PostCommentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], name='add-like-comment')
     def add_like(self, request, pk=None):
-        comment = get_object_or_404(PostComment, pk=pk)
+        comment = cache.get('comment')
+        if comment is None:
+            comment = PostComment.objects.get(pk=pk)
+            cache.set('comment', comment)
+
         if comment.dislike.filter(id=request.user.id).exists():
             return Response('', status=status.HTTP_400_BAD_REQUEST)
 
