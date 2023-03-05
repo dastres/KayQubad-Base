@@ -17,5 +17,5 @@ class LandingSectionsViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ('create', 'update', 'destroy', 'partial'):
-            return [permissions.IsAdminUser]
-        return self.parser_classes
+            return [permissions.IsAdminUser()]
+        return super().get_permissions()
