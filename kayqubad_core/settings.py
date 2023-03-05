@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'page.apps.PageConfig',
     'dastres.apps.DastresConfig',
     'marketing.apps.MarketingConfig',
+    'service.apps.ServiceConfig',
 ]
 
 MIDDLEWARE = [
@@ -213,7 +214,6 @@ CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS').split(',')
 # Config CustomUser
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 
 # Config Cache
 CACHES = {
