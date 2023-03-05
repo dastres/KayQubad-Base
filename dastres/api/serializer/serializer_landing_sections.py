@@ -7,6 +7,7 @@ class LandingSectionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = LandingSections
         fields = (
+            'id',
             'cover_main',
             'title_main_one',
             'title_main_two',
