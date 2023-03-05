@@ -16,4 +16,5 @@ class LandingSectionsTranslationOptions(TranslationOptions):
         'count_two',
         'title_three',
         'count_three',
+        'is_active',
     )
