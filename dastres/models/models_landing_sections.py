@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -42,3 +43,8 @@ class LandingSections(DateBasic, Status, LanguageStatus):
 
     def __str__(self):
         return self.title_main_one
+
+    def save(self, *args, **kwargs):
+        if not self.pk and LandingSections.objects.exists():
+            raise ValidationError(_('There is can be only one LandingSections instance'))
+        return super().save(*args, **kwargs)
