@@ -1,1 +1,2 @@
 from .serializer_service_list import ServiceListSerializer
+from .serializre_service_detail import ServiceDetailSerializer
