@@ -11,8 +11,8 @@ class Service(DateBasic, Seo, Status, LanguageStatus, BasicPost):
         verbose_name_plural = _('Services')
 
     class PositionChoices(models.TextChoices):
-        LEFT = 'Left'
-        RIGHT = 'Right'
+        LEFT = _('Left')
+        RIGHT = _('Right')
 
     short_description = RichTextUploadingField(_('Short Description'))
     position = models.CharField(_('Position'), choices=PositionChoices.choices, max_length=5,
