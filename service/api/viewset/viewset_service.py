@@ -1,4 +1,7 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework import permissions
+from rest_framework import filters
 
 from service.models import Service
 from service.api.serializer import (
@@ -9,6 +12,11 @@ from service.api.serializer import (
 class ServiceViewSet(viewsets.ModelViewSet):
     model = Service
     serializer_class = ServiceDetailSerializer
+    permission_classes = [permissions.AllowAny]
+
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['id', 'title', 'author__username', 'slug', 'short_description']
+    filterset_fields = ['position', 'is_landing', 'author__username', ]
 
     def get_queryset(self):
         queryset = self.model.objects.all()
