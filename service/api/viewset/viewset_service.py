@@ -11,6 +11,7 @@ from service.api.serializer import (
 
 class ServiceViewSet(viewsets.ModelViewSet):
     model = Service
+    lookup_field = 'slug'
     serializer_class = ServiceDetailSerializer
     permission_classes = [permissions.AllowAny]
 
