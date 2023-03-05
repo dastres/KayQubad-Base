@@ -2,7 +2,7 @@ from rest_framework import viewsets
 
 from service.models import Service
 from service.api.serializer import (
-    ServiceListSerializer, ServiceDetailSerializer
+    ServiceListSerializer, ServiceDetailSerializer, ServiceCreateUpdateSerializer
 )
 
 
@@ -18,6 +18,11 @@ class ServiceViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             return ServiceListSerializer
         elif self.action in ['create', 'update', 'partial']:
-            pass
-
+            return ServiceCreateUpdateSerializer
         return self.serializer_class
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(author=self.request.user)
