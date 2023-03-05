@@ -5,5 +5,5 @@ from service.models import Service
 @register(Service)
 class ServiceTranslationOptions(TranslationOptions):
     fields = (
-        'title', 'content', 'short_description', 'status', 'is_active'
+        'title', 'content', 'short_description','is_active'
     )
