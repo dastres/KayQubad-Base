@@ -14,3 +14,4 @@ class ServiceListSerializer(serializers.ModelSerializer):
             'thumbnail', 'thumbnail_alt', 'is_active', 'status',
             'position', 'is_landing', 'get_created_at', 'get_updated_at'
         )
+        read_only_fields = ('id', 'created_at', 'updated_at', 'author')
