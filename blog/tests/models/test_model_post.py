@@ -44,7 +44,7 @@ class PostModelTestCase(TestCase):
 
     def test_auto_generate_study_time(self):
         self.assertTrue(self.post.study_time)
-        self.assertNotEquals(self.post.study_time, read_time(self.post.content))
+        self.assertEquals(self.post.study_time, read_time(self.post.content))
         self.assertIsNotNone(self.post.study_time)
 
     def test_fields_model_post(self):
