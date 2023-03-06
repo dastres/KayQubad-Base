@@ -9,7 +9,7 @@ class PostCommentAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {'fields': ('post', "status")}),
-        ("Info User", {'fields': ('name', 'email')}),
+        ("Info User", {'fields': ('name', 'email','message')}),
         ('Reply', {'fields': ('reply',)}),
     )
 

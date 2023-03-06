@@ -17,3 +17,6 @@ from .serializer_create_update_category import CreateUpdateCategorySerializer
 from .serializer_list_comment import ListCommentSerializer
 from .serializer_detail_comment import DetailCommentSerializer
 from .serializer_create_update_comment import CreateUpdateCommentSerializer
+
+
+from .serializer_post_comment import PostCommentSerializer
