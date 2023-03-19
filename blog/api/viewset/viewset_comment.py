@@ -26,16 +26,7 @@ class PostCommentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = self.model.objects.all()
-        return queryset
-
-    # def get_queryset(self):
-    #     queryset = cache.get('all_comment')
-    #     if queryset is None:
-    #         queryset = self.model.objects.all()
-    #         cache.set('all_comment', queryset)
-    #
-    #     return queryset
-
+        return queryset.order_by('-created_at')
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:

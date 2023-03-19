@@ -16,7 +16,7 @@ class UserCommentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = self.model.objects.all()
-        return queryset
+        return queryset.order_by('-created_at')
 
     def get_permissions(self):
         if self.action in ['update', 'partial', 'destroy', 'create']:

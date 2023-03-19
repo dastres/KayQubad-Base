@@ -10,12 +10,16 @@ from portfolio.api.serializer.serializer_portfolio_category_detail import Catego
 
 
 class PortfolioCategoryViewSet(viewsets.ModelViewSet):
-    queryset = PortfolioCategory.objects.all()
+    model = PortfolioCategory
     serializer_class = CategoryDetailSerializer
     permission_classes = [permissions.AllowAny]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'slug', 'sub_category__title']
     filterset_fields = ['title', 'slug', 'sub_category__title']
+
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        return queryset.order_by('-created_at')
 
     def get_serializer_class(self):
         if self.action == 'list':
