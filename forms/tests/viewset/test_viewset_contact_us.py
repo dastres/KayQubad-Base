@@ -183,14 +183,14 @@ class ContactUsViewSetTestCase(APITestCase):
 
     # ------------------------------ Filtering ------------------------------------
 
-    def test_post_list_filtering_successes(self):
+    def test_contact_us_filtering_successes(self):
         path = reverse("forms:contact_us-list") + "?name=admin"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
         self.assertEquals(len(content['results']), 1)
 
-    def test_post_list_filtering_no_successes(self):
+    def test_contact_us_filtering_no_successes(self):
         path = reverse("forms:contact_us-list") + "?name=ssss"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
