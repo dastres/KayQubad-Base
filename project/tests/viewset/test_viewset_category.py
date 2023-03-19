@@ -65,11 +65,11 @@ class CategoryViewSetTestCase(APITestCase):
         path = reverse('project:project_category-list')
         response = self.client.get(path)
 
-        categories = ProjectCategory.objects.all()
+        categories = ProjectCategory.objects.all().order_by('-created_at')
         serializer = ListCategorySerializer(categories, many=True)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.data['results'], serializer.data)
 
     # ---------------------------- Create________________________________________
 
