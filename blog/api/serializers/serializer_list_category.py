@@ -10,7 +10,7 @@ class ListCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = PostCategory
         fields = (
-            'id', 'title', 'slug', 'thumbnail', 'thumbnail_alt',
+            'meta_title','meta_description','id', 'title', 'slug', 'thumbnail', 'thumbnail_alt',
             'status', 'parent_category', 'get_created_at', 'get_updated_at', 'is_active','article_count'
         )
         read_only_fields = ['id', 'get_created_at', 'get_updated_at']
