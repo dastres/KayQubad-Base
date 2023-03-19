@@ -192,3 +192,23 @@ class ProjectViewSetTestCase(APITestCase):
 
         self.assertNotEquals(len(content['results']), 1)
         self.assertEquals(len(content['results']), 0)
+
+        # -------------------------------- Pagination --------------------------
+
+    def test_pagination_successes(self):
+        path = reverse('project:project_category-list')
+        response = self.client.get(path, **self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('next', response.data)
+        self.assertIn('previous', response.data)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['count'], 1)
+
+    def test_pagination_404(self):
+        path = reverse('project:project_category-list')
+        response = self.client.get(path + '?page=2', **self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertNotIn('next', response.data)
+        self.assertNotIn('previous', response.data)

@@ -157,7 +157,6 @@ class UserCommentViewSetTestCase(APITestCase):
         self.assertNotEquals(len(content['results']), 1)
         self.assertEquals(len(content['results']), 0)
 
-
         # -------------------------------- Pagination --------------------------
 
     def test_pagination_successes(self):
