@@ -8,5 +8,5 @@ class PortfolioCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Portfolio
         fields = [
-            'title', 'content', 'category', 'slug', 'thumbnail', 'thumbnail_alt', 'status', 'is_active',
+            'meta_title','meta_description','title', 'content', 'category', 'slug', 'thumbnail', 'thumbnail_alt', 'status', 'is_active',
         ]
