@@ -66,11 +66,11 @@ class PortfolioViewSetTestCase(APITestCase):
         path = reverse('portfolio:portfolio-list')
         response = self.client.get(path)
 
-        portfolio = Portfolio.objects.all()
+        portfolio = Portfolio.objects.all().order_by('-created_at')
         serializer = PortfolioListSerializer(portfolio, many=True)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.data['results'], serializer.data)
 
     # ---------------------------- Create ________________________________________
     def test_portfolio_create_valid_data(self):
