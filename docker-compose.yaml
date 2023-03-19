@@ -34,10 +34,8 @@ services:
       python manage.py collectstatic --noinput;
       gunicorn --bind=0.0.0.0:8000 --timeout=90 --reload core.wsgi:application;
       "
-      depends_on:
+    depends_on:
       - redis
-
-
 
   redis:
     image: 'redis:latest'
