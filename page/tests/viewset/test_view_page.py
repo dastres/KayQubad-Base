@@ -175,14 +175,14 @@ class ViewSetPageTestCase(APITestCase):
 
         # ------------------------------ Search ------------------------------------
 
-    def test_contact_us_list_search_successes(self):
+    def test_page_list_search_successes(self):
         path = reverse('page:page-list') + "?search=title+fake"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
         self.assertEquals(len(content['results']), 1)
 
-    def test_contact_us_list_search_no_successes(self):
+    def test_page_list_search_no_successes(self):
         path = reverse('page:page-list') + "?search=sdsds"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
@@ -192,14 +192,14 @@ class ViewSetPageTestCase(APITestCase):
 
         # ------------------------------ Filtering ------------------------------------
 
-    def test_post_list_filtering_successes(self):
+    def test_page_filtering_successes(self):
         path = reverse('page:page-list') + "?title=title+fake"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
         self.assertEquals(len(content['results']), 1)
 
-    def test_post_list_filtering_no_successes(self):
+    def test_page_filtering_no_successes(self):
         path = reverse('page:page-list') + "?title=nima@gmail.com"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
