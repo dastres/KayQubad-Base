@@ -1,4 +1,44 @@
 services:
+  nginx:
+      image: nginx:latest
+      container_name: "nginx_dastres"
+      restart: always
+      ports:
+        - "888:888"
+      volumes:
+        - ./static:/static/
+        - ./media:/media/
+        - /var/log/dastres/nginx/:/var/log/nginx/
+        - ./nginx:/etc/nginx/conf.d
+      depends_on:
+        - app
+
+  app:
+    build: .
+    container_name: 'app_dastres'
+    expose:
+      - 8000
+    restart: 'always'
+    env_file:
+      - .env
+    volumes:
+      - .:/app/dastres/
+      - ./static/:/app/dastres/static/
+      - ./media/:/app/dastres/media/
+      - /var/log/dastres:/var/log/dastres
+      -
+    command:
+      sh -c "
+      python manage.py makemigrations;
+      python manage.py migrate;
+      python manage.py collectstatic --noinput;
+      gunicorn --bind=0.0.0.0:8000 --timeout=90 --reload core.wsgi:application;
+      "
+      depends_on:
+      - redis
+
+
+
   redis:
     image: 'redis:latest'
     container_name: 'redis_dastres'
