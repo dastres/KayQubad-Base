@@ -66,11 +66,11 @@ class PostViewSetTestCase(APITestCase):
         path = reverse('blog:post-list')
         response = self.client.get(path)
 
-        categories = Post.objects.all()
+        categories = Post.objects.all().order_by('-created_at')
         serializer = ListPostSerializer(categories, many=True)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.data['results'], serializer.data)
 
     # -------------------------- Create -------------------------------------
     def test_post_create_valid_data(self):
@@ -168,15 +168,15 @@ class PostViewSetTestCase(APITestCase):
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
-        self.assertEquals(len(content), 1)
+        self.assertEquals(len(content['results']), 1)
 
     def test_category_list_search_no_successes(self):
         path = reverse("blog:post-list") + "?search=xoxoxoxo"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
-        self.assertNotEquals(len(content), 1)
-        self.assertEquals(len(content), 0)
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
 
         # ------------------------------ Filtering ------------------------------------
 
@@ -185,12 +185,12 @@ class PostViewSetTestCase(APITestCase):
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
-        self.assertEquals(len(content), 1)
+        self.assertEquals(len(content['results']), 1)
 
     def test_post_list_filtering_no_successes(self):
         path = reverse("blog:post-list") + "?title=xoxoxoxo"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
-        self.assertNotEquals(len(content), 1)
-        self.assertEquals(len(content), 0)
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
