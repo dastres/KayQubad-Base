@@ -65,11 +65,11 @@ class CategoryViewSetTestCase(APITestCase):
         path = reverse('portfolio:portfolio_category-list')
         response = self.client.get(path)
 
-        categories = PortfolioCategory.objects.all()
+        categories = PortfolioCategory.objects.all().order_by('-created_at')
         serializer = CategoryListSerializer(categories, many=True)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.data['results'], serializer.data)
 
     # ---------------------------- Create ________________________________________
     def test_category_create_valid_data(self):
@@ -157,3 +157,57 @@ class CategoryViewSetTestCase(APITestCase):
         response = self.client.put(path=path, data=self.update_valid_date)
 
         self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+   # ------------------------------ Search ------------------------------------
+
+    def test_portfolio_category_list_search_successes(self):
+        path = reverse('portfolio:portfolio_category-list') + "?search=category+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 2)
+
+    def test_portfolio_category_list_search_no_successes(self):
+        path = reverse('portfolio:portfolio_category-list') + "?search=sdsds"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+        # ------------------------------ Filtering ------------------------------------
+
+    def test_portfolio_category_filtering_successes(self):
+        path = reverse('portfolio:portfolio_category-list') + "?title=category+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_portfolio_category_filtering_no_successes(self):
+        path = reverse('portfolio:portfolio_category-list') + "?title=nima@gmail.com"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+        # -------------------------------- Pagination --------------------------
+
+    def test_pagination_successes(self):
+        path = reverse('portfolio:portfolio_category-list')
+        response = self.client.get(path, **self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('next', response.data)
+        self.assertIn('previous', response.data)
+        self.assertEqual(len(response.data['results']), 2)
+        self.assertEqual(response.data['count'], 2)
+
+    def test_pagination_404(self):
+        path = reverse('portfolio:portfolio_category-list')
+        response = self.client.get(path + '?page=2', **self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertNotIn('next', response.data)
+        self.assertNotIn('previous', response.data)

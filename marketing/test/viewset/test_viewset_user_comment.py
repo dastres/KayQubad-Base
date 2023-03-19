@@ -52,11 +52,12 @@ class UserCommentViewSetTestCase(APITestCase):
         path = reverse('marketing:user_comment-list')
         response = self.client.get(path)
 
-        user_comments = UserComment.objects.all()
+        user_comments = UserComment.objects.all().order_by('-created_at')
         serializer = UserCommentSerializer(user_comments, many=True)
 
         self.assertTrue(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['results'], serializer.data)
 
     # ________________________ Create ______________________________
     def test_useer_comment_create_valid_data(self):
@@ -120,3 +121,58 @@ class UserCommentViewSetTestCase(APITestCase):
 
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+    # ------------------------------ Search ------------------------------------
+
+    def test_user_comment_list_search_successes(self):
+        path = reverse('marketing:user_comment-list') + "?search=web"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_user_comment_list_search_no_successes(self):
+        path = reverse('marketing:user_comment-list') + "?search=xoxoxoxo"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+    # ------------------------------ Filtering ------------------------------------
+
+    def test_user_comment_filtering_successes(self):
+        path = reverse('marketing:user_comment-list') + "?company=web"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_user_comment_filtering_no_successes(self):
+        path = reverse('marketing:user_comment-list') + "?company=ssss"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+        # -------------------------------- Pagination --------------------------
+
+    def test_pagination_successes(self):
+        path = reverse('marketing:user_comment-list')
+        response = self.client.get(path, **self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('next', response.data)
+        self.assertIn('previous', response.data)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['count'], 1)
+
+    def test_pagination_404(self):
+        path = reverse('marketing:user_comment-list')
+        response = self.client.get(path + '?page=2', **self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertNotIn('next', response.data)
+        self.assertNotIn('previous', response.data)

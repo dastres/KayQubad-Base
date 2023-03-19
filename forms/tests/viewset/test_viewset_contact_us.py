@@ -74,7 +74,7 @@ class ContactUsViewSetTestCase(APITestCase):
         serializer = ListContactUsSerializer(contact_us, many=True)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.data['results'], serializer.data)
 
     def test_contact_us_permission_list(self):
         path = reverse("forms:contact_us-list")
@@ -163,3 +163,56 @@ class ContactUsViewSetTestCase(APITestCase):
 
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEquals(contact_us, 0)
+
+    # ------------------------------ Search ------------------------------------
+
+    def test_contact_us_list_search_successes(self):
+        path = reverse("forms:contact_us-list") + "?search=admin"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_contact_us_list_search_no_successes(self):
+        path = reverse("forms:contact_us-list") + "?search=xoxoxoxo"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+    # ------------------------------ Filtering ------------------------------------
+
+    def test_contact_us_filtering_successes(self):
+        path = reverse("forms:contact_us-list") + "?name=admin"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_contact_us_filtering_no_successes(self):
+        path = reverse("forms:contact_us-list") + "?name=ssss"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+    # -------------------------------- Pagination --------------------------
+    def test_pagination_successes(self):
+        path = reverse("forms:contact_us-list")
+        response = self.client.get(path,**self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('next', response.data)
+        self.assertIn('previous', response.data)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['count'], 1)
+
+    def test_pagination_404(self):
+        path = reverse("forms:contact_us-list")
+        response = self.client.get(path + '?page=2',**self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertNotIn('next', response.data)
+        self.assertNotIn('previous', response.data)

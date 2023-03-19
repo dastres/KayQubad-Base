@@ -70,11 +70,11 @@ class ServiceViewSetTestCase(APITestCase):
         path = reverse('service:service-list')
         response = self.client.get(path)
 
-        service = Service.objects.all()
+        service = Service.objects.all().order_by('-created_at')
         serializer = ServiceListSerializer(service, many=True)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.data['results'], serializer.data)
 
     # ---------------------------- Create ________________________________________
     def test_service_create_valid_data(self):
@@ -175,15 +175,15 @@ class ServiceViewSetTestCase(APITestCase):
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
-        self.assertEquals(len(content), 1)
+        self.assertEquals(len(content['results']), 1)
 
     def test_category_list_search_no_successes(self):
         path = reverse("service:service-list") + "?search=xoxoxoxo"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
-        self.assertNotEquals(len(content), 1)
-        self.assertEquals(len(content), 0)
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
 
         # ------------------------------ Filtering ------------------------------------
 
@@ -192,12 +192,32 @@ class ServiceViewSetTestCase(APITestCase):
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
-        self.assertEquals(len(content), 1)
+        self.assertEquals(len(content['results']), 1)
 
     def test_service_filtering_no_successes(self):
         path = reverse("service:service-list") + "?position=Right"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
-        self.assertNotEqual(len(content), 1)
-        self.assertEquals(len(content), 0)
+        self.assertNotEqual(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+   # -------------------------------- Pagination --------------------------
+
+    def test_pagination_successes(self):
+        path = reverse("service:service-list")
+        response = self.client.get(path, **self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('next', response.data)
+        self.assertIn('previous', response.data)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['count'], 1)
+
+    def test_pagination_404(self):
+        path = reverse("service:service-list")
+        response = self.client.get(path + '?page=2', **self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertNotIn('next', response.data)
+        self.assertNotIn('previous', response.data)

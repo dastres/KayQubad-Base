@@ -66,11 +66,11 @@ class PortfolioViewSetTestCase(APITestCase):
         path = reverse('portfolio:portfolio-list')
         response = self.client.get(path)
 
-        portfolio = Portfolio.objects.all()
+        portfolio = Portfolio.objects.all().order_by('-created_at')
         serializer = PortfolioListSerializer(portfolio, many=True)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.data['results'], serializer.data)
 
     # ---------------------------- Create ________________________________________
     def test_portfolio_create_valid_data(self):
@@ -159,3 +159,58 @@ class PortfolioViewSetTestCase(APITestCase):
         response = self.client.put(path=path, data=self.valid_date)
 
         self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+   # ------------------------------ Search ------------------------------------
+
+    def test_portfolio_list_search_successes(self):
+        path = reverse('portfolio:portfolio-list') + "?search=portfolio+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_portfolio_list_search_no_successes(self):
+        path = reverse('portfolio:portfolio-list') + "?search=sdsds"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+        # ------------------------------ Filtering ------------------------------------
+
+    def test_portfolio_filtering_successes(self):
+        path = reverse('portfolio:portfolio-list') + "?title=portfolio+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_portfolio_filtering_no_successes(self):
+        path = reverse('portfolio:portfolio-list') + "?title=nima@gmail.com"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+        # -------------------------------- Pagination --------------------------
+
+    def test_pagination_successes(self):
+        path = reverse('portfolio:portfolio-list')
+        response = self.client.get(path, **self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('next', response.data)
+        self.assertIn('previous', response.data)
+        self.assertEqual(len(response.data['results']),1)
+        self.assertEqual(response.data['count'],1)
+
+    def test_pagination_404(self):
+        path = reverse('portfolio:portfolio-list')
+        response = self.client.get(path + '?page=2', **self.auth_headers)
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertNotIn('next', response.data)
+        self.assertNotIn('previous', response.data)
