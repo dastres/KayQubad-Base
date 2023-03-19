@@ -82,7 +82,7 @@ class ViewSetPageTestCase(APITestCase):
         serializer = PageListSerializer(page, many=True)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.data['results'], serializer.data)
 
     # ________________________ Create ______________________________
     def test_page_create_valid_data(self):
@@ -172,3 +172,37 @@ class ViewSetPageTestCase(APITestCase):
 
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # ------------------------------ Search ------------------------------------
+
+    def test_contact_us_list_search_successes(self):
+        path = reverse('page:page-list') + "?search=title+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_contact_us_list_search_no_successes(self):
+        path = reverse('page:page-list') + "?search=sdsds"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+        # ------------------------------ Filtering ------------------------------------
+
+    def test_post_list_filtering_successes(self):
+        path = reverse('page:page-list') + "?title=title+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_post_list_filtering_no_successes(self):
+        path = reverse('page:page-list') + "?title=nima@gmail.com"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
