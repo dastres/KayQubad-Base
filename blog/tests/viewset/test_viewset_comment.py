@@ -87,11 +87,11 @@ class CommentViewSetTestCase(APITestCase):
         path = reverse('blog:comment-list')
         response = self.client.get(path)
 
-        categories = PostComment.objects.all()
+        categories = PostComment.objects.all().order_by('-created_at')
         serializer = ListCommentSerializer(categories, many=True)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.data['results'], serializer.data)
 
     # -------------------------- Create -------------------------------------
     def test_comment_create_valid_data(self):
