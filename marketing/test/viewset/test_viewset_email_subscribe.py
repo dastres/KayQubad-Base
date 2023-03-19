@@ -106,14 +106,14 @@ class EmailSubscriptionViewSetTestCase(APITestCase):
 
         # ------------------------------ Search ------------------------------------
 
-    def test_contact_us_list_search_successes(self):
+    def test_email_subscription_list_search_successes(self):
         path = reverse('marketing:email_subscription-list') + "?search=admin@gmail.com"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
         self.assertEquals(len(content['results']), 1)
 
-    def test_contact_us_list_search_no_successes(self):
+    def test_email_subscription_list_search_no_successes(self):
         path = reverse('marketing:email_subscription-list') + "?search=xoxoxoxo"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
@@ -123,14 +123,14 @@ class EmailSubscriptionViewSetTestCase(APITestCase):
 
         # ------------------------------ Filtering ------------------------------------
 
-    def test_post_list_filtering_successes(self):
+    def test_email_subscription_filtering_successes(self):
         path = reverse('marketing:email_subscription-list') + "?email=admin@gmail.com"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
         self.assertEquals(len(content['results']), 1)
 
-    def test_post_list_filtering_no_successes(self):
+    def test_email_subscription_filtering_no_successes(self):
         path = reverse('marketing:email_subscription-list') + "?email=nima@gmail.com"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)

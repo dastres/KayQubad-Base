@@ -125,14 +125,14 @@ class UserCommentViewSetTestCase(APITestCase):
 
     # ------------------------------ Search ------------------------------------
 
-    def test_contact_us_list_search_successes(self):
+    def test_user_comment_list_search_successes(self):
         path = reverse('marketing:user_comment-list') + "?search=web"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
         self.assertEquals(len(content['results']), 1)
 
-    def test_contact_us_list_search_no_successes(self):
+    def test_user_comment_list_search_no_successes(self):
         path = reverse('marketing:user_comment-list') + "?search=xoxoxoxo"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
@@ -142,14 +142,14 @@ class UserCommentViewSetTestCase(APITestCase):
 
     # ------------------------------ Filtering ------------------------------------
 
-    def test_post_list_filtering_successes(self):
+    def test_user_comment_filtering_successes(self):
         path = reverse('marketing:user_comment-list') + "?company=web"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
         self.assertEquals(len(content['results']), 1)
 
-    def test_post_list_filtering_no_successes(self):
+    def test_user_comment_filtering_no_successes(self):
         path = reverse('marketing:user_comment-list') + "?company=ssss"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
