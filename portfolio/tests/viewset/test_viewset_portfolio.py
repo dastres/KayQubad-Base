@@ -159,3 +159,38 @@ class PortfolioViewSetTestCase(APITestCase):
         response = self.client.put(path=path, data=self.valid_date)
 
         self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+   # ------------------------------ Search ------------------------------------
+
+    def test_portfolio_list_search_successes(self):
+        path = reverse('portfolio:portfolio-list') + "?search=portfolio+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_portfolio_list_search_no_successes(self):
+        path = reverse('portfolio:portfolio-list') + "?search=sdsds"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+        # ------------------------------ Filtering ------------------------------------
+
+    def test_portfolio_filtering_successes(self):
+        path = reverse('portfolio:portfolio-list') + "?title=portfolio+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_portfolio_filtering_no_successes(self):
+        path = reverse('portfolio:portfolio-list') + "?title=nima@gmail.com"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
