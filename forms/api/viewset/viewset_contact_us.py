@@ -22,7 +22,7 @@ class ContactUsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = self.model.objects.all()
-        return queryset
+        return queryset.order_by('-created_at')
 
     def get_serializer_class(self):
         if self.action == 'list':

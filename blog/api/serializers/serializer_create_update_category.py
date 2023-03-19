@@ -7,6 +7,6 @@ class CreateUpdateCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = PostCategory
         fields = (
-            'title', 'slug', 'description', 'thumbnail', 'thumbnail_alt', 'parent_category', 'status', 'is_active'
+            'meta_title','meta_description','title', 'slug', 'description', 'thumbnail', 'thumbnail_alt', 'parent_category', 'status', 'is_active'
 
         )

@@ -13,7 +13,7 @@ class DetailPostSerializer(serializers.ModelSerializer):
         model = Post
         fields = (
             'id', 'title', 'content', 'slug', 'thumbnail', 'thumbnail_alt', 'short_description',
-            'study_time','post_comments',
+            'study_time','post_comments','meta_title','meta_description',
             'status', 'author', 'category', 'get_created_at', 'get_updated_at', 'is_active', 'status'
         )
 

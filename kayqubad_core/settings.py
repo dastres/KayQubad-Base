@@ -180,6 +180,8 @@ SIMPLE_JWT = {
 # DRF Config
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'kayqubad_core.pagination.CustomPagination',
+    'PAGE_SIZE': 9,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',

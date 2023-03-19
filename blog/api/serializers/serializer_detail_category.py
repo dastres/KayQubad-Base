@@ -9,7 +9,7 @@ class DetailCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = PostCategory
         fields = (
-            'id', 'title', 'slug', 'description', 'thumbnail', 'thumbnail_alt', 'get_created_at', 'get_updated_at',
+            'meta_title','meta_description','id', 'title', 'slug', 'description', 'thumbnail', 'thumbnail_alt', 'get_created_at', 'get_updated_at',
             'parent_category', 'status',
 
         )

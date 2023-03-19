@@ -8,6 +8,6 @@ class CategoryListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PortfolioCategory
-        fields = ['id', 'title', 'slug', 'categories', 'thumbnail', 'thumbnail_alt', 'get_created_at', 'get_updated_at',
+        fields = ['meta_title','meta_description','id', 'title', 'slug', 'categories', 'thumbnail', 'thumbnail_alt', 'get_created_at', 'get_updated_at',
                   'status', 'is_active']
         read_only_fields = ['id', 'author', 'get_created_at', 'get_updated_at']

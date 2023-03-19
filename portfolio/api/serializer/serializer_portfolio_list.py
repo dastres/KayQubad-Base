@@ -9,6 +9,6 @@ class PortfolioListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Portfolio
         fields = (
-            'id', 'title', 'category', 'get_created_at', 'get_updated_at', 'slug', 'thumbnail', 'thumbnail_alt'
+            'meta_title','meta_description','id', 'title', 'category', 'get_created_at', 'get_updated_at', 'slug', 'thumbnail', 'thumbnail_alt'
         )
         read_only_fields = ['id', 'get_created_at', 'get_updated_at']
