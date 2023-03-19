@@ -171,11 +171,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Config JWT
-SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT',),
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-}
+if DEBUG:
+    SIMPLE_JWT = {
+        'AUTH_HEADER_TYPES': ('JWT',),
+        'ACCESS_TOKEN_LIFETIME': timedelta(days=30),  # TODO: change this
+        'REFRESH_TOKEN_LIFETIME': timedelta(days=100),
+    }
+else:
+    SIMPLE_JWT = {
+        'AUTH_HEADER_TYPES': ('JWT',),
+        'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # TODO: change this
+        'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    }
 
 # DRF Config
 REST_FRAMEWORK = {
