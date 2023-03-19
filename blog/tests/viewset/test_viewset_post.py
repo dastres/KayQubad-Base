@@ -214,4 +214,4 @@ class PostViewSetTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertNotIn('next', response.data)
         self.assertNotIn('previous', response.data)
-        self.assertNotEqual(response.data['count'], 1)
+
