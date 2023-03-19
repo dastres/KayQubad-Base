@@ -66,11 +66,11 @@ class ProjectViewSetTestCase(APITestCase):
         path = reverse('project:project-list')
         response = self.client.get(path)
 
-        portfolio = Project.objects.all()
+        portfolio = Project.objects.all().order_by('-created_at')
         serializer = ProjectListSerializer(portfolio, many=True)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.data['results'], serializer.data)
 
     # ---------------------------- Create ________________________________________
     def test_project_create_valid_data(self):
@@ -159,3 +159,36 @@ class ProjectViewSetTestCase(APITestCase):
         response = self.client.put(path=path, data=self.valid_date)
 
         self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+# ------------------------------ Search ------------------------------------
+    def test_project_list_search_successes(self):
+        path = reverse('project:project_category-list') + "?search=category+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_project_list_search_no_successes(self):
+        path = reverse('project:project_category-list') + "?search=sdsds"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
+
+        # ------------------------------ Filtering ------------------------------------
+
+    def test_project_filtering_successes(self):
+        path = reverse('project:project_category-list') + "?title=category+fake"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content['results']), 1)
+
+    def test_project_filtering_no_successes(self):
+        path = reverse('project:project_category-list') + "?title=nima@gmail.com"
+        response = self.client.get(path, **self.auth_headers)
+        content = json.loads(response.content)
+
+        self.assertNotEquals(len(content['results']), 1)
+        self.assertEquals(len(content['results']), 0)
