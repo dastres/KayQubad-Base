@@ -160,14 +160,14 @@ class CategoryViewSetTestCase(APITestCase):
 
    # ------------------------------ Search ------------------------------------
 
-    def test_contact_us_list_search_successes(self):
+    def test_portfolio_category_list_search_successes(self):
         path = reverse('portfolio:portfolio_category-list') + "?search=category+fake"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
         self.assertEquals(len(content['results']), 2)
 
-    def test_contact_us_list_search_no_successes(self):
+    def test_portfolio_category_list_search_no_successes(self):
         path = reverse('portfolio:portfolio_category-list') + "?search=sdsds"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
@@ -177,14 +177,14 @@ class CategoryViewSetTestCase(APITestCase):
 
         # ------------------------------ Filtering ------------------------------------
 
-    def test_post_list_filtering_successes(self):
+    def test_portfolio_category_filtering_successes(self):
         path = reverse('portfolio:portfolio_category-list') + "?title=category+fake"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
 
         self.assertEquals(len(content['results']), 1)
 
-    def test_post_list_filtering_no_successes(self):
+    def test_portfolio_category_filtering_no_successes(self):
         path = reverse('portfolio:portfolio_category-list') + "?title=nima@gmail.com"
         response = self.client.get(path, **self.auth_headers)
         content = json.loads(response.content)
