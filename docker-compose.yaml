@@ -26,14 +26,12 @@ services:
       - ./static/:/app/dastres/static/
       - ./media/:/app/dastres/media/
       - /var/log/dastres:/var/log/dastres
-      -
     command:
       sh -c "
       python manage.py makemigrations;
       python manage.py migrate;
       python manage.py collectstatic --noinput;
-      gunicorn --bind=0.0.0.0:8000 --timeout=90 --reload core.wsgi:application;
-      "
+      gunicorn --bind=0.0.0.0:8000 --timeout=90 --reload core.wsgi:application;"
     depends_on:
       - redis
 
@@ -42,4 +40,4 @@ services:
     container_name: 'redis_dastres'
     restart: always
     ports:
-      - 6379:6349
+      - 2223:6349
