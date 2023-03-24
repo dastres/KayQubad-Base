@@ -231,3 +231,42 @@ CACHES = {
         'LOCATION': env('REDIS_CACHE')
     }
 }
+
+# Config Logging
+LOGGING_LEVEL = env('LOGGING_LEVEL')
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {filename} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {asctime}\n{message}\n',
+            'style': '{',
+        },
+    },
+
+    'handlers': {
+        'file': {
+            'level': LOGGING_LEVEL,
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/logs.log'),
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': LOGGING_LEVEL,
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+
+    'loggers': {
+        'django': {
+            'handlers': ['console'] if DEBUG else ['file'],
+            'level': LOGGING_LEVEL,
+        },
+    },
+}
