@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Service',
+            name='Page',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='created at')),
@@ -39,16 +39,12 @@ class Migration(migrations.Migration):
                 ('slug', models.SlugField(blank=True, unique=True)),
                 ('thumbnail', models.ImageField(blank=True, null=True, upload_to='thumbnails/2023/3', verbose_name='thumbnail')),
                 ('thumbnail_alt', models.CharField(blank=True, max_length=350, verbose_name='thumbnail alt')),
-                ('short_description', ckeditor_uploader.fields.RichTextUploadingField(verbose_name='Short Description')),
-                ('short_description_en', ckeditor_uploader.fields.RichTextUploadingField(null=True, verbose_name='Short Description')),
-                ('short_description_fa', ckeditor_uploader.fields.RichTextUploadingField(null=True, verbose_name='Short Description')),
-                ('position', models.CharField(choices=[('Left', 'Left'), ('Right', 'Right')], default='Left', max_length=5, verbose_name='Position')),
-                ('is_landing', models.BooleanField(default=False, verbose_name='is Landing ?')),
+                ('custom_template', models.BooleanField(default=False, verbose_name='custom templates')),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='%(class)s_posts', to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'verbose_name': 'Service',
-                'verbose_name_plural': 'Services',
+                'verbose_name': 'Page',
+                'verbose_name_plural': 'Pages',
             },
         ),
     ]
