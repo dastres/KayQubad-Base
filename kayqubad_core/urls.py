@@ -18,7 +18,7 @@ urlpatterns_api_v1 = [
 
 urlpatterns = i18n_patterns(
     # urls admin
-    # path('admin/', admin.site.urls, name="admin_urls"),
+    path('admin/', admin.site.urls, name="admin_urls"),
 
     # urls drf_spectacular
     path('', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
