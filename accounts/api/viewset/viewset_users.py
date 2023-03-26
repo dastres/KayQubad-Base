@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
-from accounts.api.serializers import UserListSerializer, UserDetailSerializer
+from accounts.api.serializers import UserListSerializer, UserDetailSerializer, UserCreateSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -16,4 +16,13 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'list':
             return UserListSerializer
+        elif self.action == 'create':
+            return UserCreateSerializer
         return self.serializer_class
+
+    def get_permissions(self):
+        if self.action == 'create':
+            return [permissions.AllowAny()]
+        return super().get_permissions()
+
+
