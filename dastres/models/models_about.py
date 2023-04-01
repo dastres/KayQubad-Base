@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -19,3 +20,8 @@ class About(LanguageStatus):
 
     def __str__(self):
         return self.name
+
+    def save(self,*args,**kwargs):
+        if not self.pk and About.objects.exists():
+            raise ValidationError(_('There is can be only one About instance'))
+        return super().save(*args, **kwargs)
