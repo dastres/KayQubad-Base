@@ -13,3 +13,5 @@ from .serialzieer_team_member_list import TeamMembersListSerializer
 from .serialzier_social_medai_detail import SocialMediaDetailSerializer
 from .serialzier_social_medai_list import SocialMediaListSerializer
 from .serialzier_social_media_create_updaet import SocialMediaCreateUpdateSerializer
+
+from .serialzier_about_detail import AboutDetailSerializer

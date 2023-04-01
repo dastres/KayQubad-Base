@@ -13,10 +13,10 @@ class About(Seo, LanguageStatus):
         verbose_name = _('About')
         verbose_name_plural = _('About')
 
-    cover_video = models.ImageField(_('Cover Video'),
+    cover_video = models.ImageField(_('Cover Video'),blank=True,null=True,
                                     upload_to=f'about/cover_video/{str(datetime.now().year)}/{str(datetime.now().month)}',
                                     )
-    video = models.FileField(_('Video'),
+    video = models.FileField(_('Video'),blank=True,null=True,
                              upload_to=f'about/video/{str(datetime.now().year)}/{str(datetime.now().month)}',
                              )
     description = RichTextField(_('Description'))
