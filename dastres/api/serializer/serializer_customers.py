@@ -7,3 +7,4 @@ class CustomersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customers
         fields = ['id','name','logo']
+        read_only_fields = ('id',)
