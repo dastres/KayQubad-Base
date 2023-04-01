@@ -6,7 +6,7 @@ class UserCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserComment
         fields = (
-            'name', 'company', 'avatar', 'avatar_alt', 'content', 'rate', 'is_active', 'get_created_at',
+            'id','name', 'company', 'avatar', 'avatar_alt', 'content', 'rate', 'is_active', 'get_created_at',
             'get_updated_at'
         )
         read_only_fields = ('id', 'get_updated_at', 'get_created_at')
