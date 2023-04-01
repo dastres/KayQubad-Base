@@ -8,7 +8,7 @@ class SocialMediaInline(admin.TabularInline):
     extra = 0
 
     fieldsets = (
-        (_("Main_en"), {'fields': ('title_en', 'is_active_en', 'status_en')}),
-        (_("Main_fa"), {'fields': ('title_fa', 'is_active_fa', 'status_fa')}),
+        (_("Main_en"), {'fields': ('title_en', 'is_active_en')}),
+        (_("Main_fa"), {'fields': ('title_fa', 'is_active_fa')}),
         (_("Main"), {'fields': ('url',)}),
     )

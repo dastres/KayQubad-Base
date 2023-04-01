@@ -22,7 +22,7 @@ class LandingSectionsTranslationOptions(TranslationOptions):
 
 @register(SocialMedia)
 class SocialMediaTranslationOptions(TranslationOptions):
-    fields = ('title', 'is_active', 'status')
+    fields = ('title', 'is_active')
 
 
 @register(TeamMembers)
