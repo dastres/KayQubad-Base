@@ -14,7 +14,7 @@ class About(LanguageStatus):
 
     name = models.CharField(_('name'), max_length=200)
     position = models.CharField(_('position'), max_length=200)
-    avatar = models.ImageField(_('avatar'),
+    avatar = models.ImageField(_('avatar'),blank=True,null=True,
                                upload_to=f'dastres/about/avatar/{str(datetime.now().year)}/{str(datetime.now().month)}')
 
 
