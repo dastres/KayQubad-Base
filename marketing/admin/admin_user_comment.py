@@ -15,11 +15,11 @@ class UserCommentAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Main", {'fields': ('name', 'avatar', 'avatar_alt', 'content', 'company', 'rate')}),
         ("Date", {'fields': ('created_at', "updated_at")}),
-        ('Settings', {'fields': ('status',)}),
+
     )
 
     add_fieldsets = (
         ("Main", {'fields': ('name', 'avatar', 'avatar_alt', 'content', 'company', 'rate')}),
         ("Date", {'fields': ('created_at', "updated_at")}),
-        ('Settings', {'fields': ('status',)}),
+
     )
