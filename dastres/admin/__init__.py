@@ -1,4 +1,4 @@
 from .admin_landing_sections import LandingSectionsAdmin
 
-from .admin_inline_social_media import SocialMediaInline
+from .admin_social_media_inline import SocialMediaInline
 from .admin_team_member import TeamMembersAdmin

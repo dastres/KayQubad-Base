@@ -3,12 +3,16 @@ from rest_framework import permissions
 from rest_framework import filters
 
 from dastres.models import TeamMembers
-from dastres.api.serializer import TeamMembersCreateUpdateSerializer,TeamMembersDetailSerializer
+from dastres.api.serializer import (
+    TeamMembersCreateUpdateSerializer,
+    TeamMembersDetailSerializer,
+    TeamMembersListSerializer
+)
 
 
 class TeamMembersViewSet(viewsets.ModelViewSet):
     model = TeamMembers
-    serializer_class = TeamMembersCreateUpdateSerializer
+    serializer_class = TeamMembersDetailSerializer
     permission_classes = (permissions.AllowAny,)
 
     def get_queryset(self):
@@ -16,8 +20,10 @@ class TeamMembersViewSet(viewsets.ModelViewSet):
         return queryset
 
     def get_serializer_class(self):
-        if self.action == 'retrive':
-            return TeamMembersDetailSerializer
+        if self.action == 'list':
+            return TeamMembersListSerializer
+        elif self.action in ['create','update','partial']:
+            return TeamMembersCreateUpdateSerializer
         return self.serializer_class
 
     # def get_permissions(self):

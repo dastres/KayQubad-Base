@@ -9,8 +9,8 @@ from utils.general.models import LanguageStatus
 
 class TeamMembers(LanguageStatus):
     class Meta:
-        verbose_name = _('About')
-        verbose_name_plural = _('About')
+        verbose_name = _('Team Member')
+        verbose_name_plural = _('Team Members')
 
     name = models.CharField(_('name'), max_length=200)
     position = models.CharField(_('position'), max_length=200)

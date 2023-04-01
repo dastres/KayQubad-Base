@@ -10,10 +10,17 @@ class SocialMedia(DateBasic, Status, LanguageStatus):
         verbose_name = _('Social Media')
         verbose_name_plural = _('Social Media')
 
-    title = models.CharField(_('title'), max_length=200)
+    class TitleChoose(models.TextChoices):
+        twitter = _('Twitter')
+        linkedin = _('Linkedin')
+        github = _('Github')
+        instagram = _('Instagram')
+        website = _('Website')
+
+    title = models.CharField(_('title'), max_length=10, choices=TitleChoose.choices)
     url = models.URLField(_('URL'))
     team_members = models.ForeignKey(TeamMembers, on_delete=models.CASCADE, related_name='socials',
-                              verbose_name=_('team_members'))
+                                     verbose_name=_('social media'))
 
     def __str__(self):
         return self.title

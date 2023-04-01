@@ -7,3 +7,4 @@ from .serializer_landing_sections import LandingSectionsSerializer
 
 from .serializer_team_member_create_update import TeamMembersCreateUpdateSerializer
 from .serializer_team_member_detail import TeamMembersDetailSerializer
+from .serialzieer_team_member_list import TeamMembersListSerializer
