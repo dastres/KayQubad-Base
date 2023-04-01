@@ -1,1 +1,3 @@
 from .admin_landing_sections import LandingSectionsAdmin
+
+from .admin_inline_social_media import SocialMediaInline
