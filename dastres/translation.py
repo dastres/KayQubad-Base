@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from dastres.models import LandingSections
+from dastres.models import LandingSections, SocialMedia, About
 
 
 @register(LandingSections)
@@ -18,3 +18,13 @@ class LandingSectionsTranslationOptions(TranslationOptions):
         'count_three',
         'is_active',
     )
+
+
+@register(SocialMedia)
+class SocialMediaTranslationOptions(TranslationOptions):
+    fields = ('title', 'is_active', 'status')
+
+
+@register(About)
+class AboutTranslationOptions(TranslationOptions):
+    fields = ('name', 'position', 'is_active')
