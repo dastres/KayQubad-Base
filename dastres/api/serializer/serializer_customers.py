@@ -6,4 +6,5 @@ from dastres.models.models_customers import Customers
 class CustomersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customers
-        fields = ['name','logo']
+        fields = ['id','name','logo']
+        read_only_fields = ('id',)
