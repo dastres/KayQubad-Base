@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from utils.general.models import LanguageStatus
 
 
-class About(LanguageStatus):
+class TeamMembers(LanguageStatus):
     class Meta:
         verbose_name = _('About')
         verbose_name_plural = _('About')
@@ -20,8 +20,3 @@ class About(LanguageStatus):
 
     def __str__(self):
         return self.name
-
-    def save(self,*args,**kwargs):
-        if not self.pk and About.objects.exists():
-            raise ValidationError(_('There is can be only one About instance'))
-        return super().save(*args, **kwargs)

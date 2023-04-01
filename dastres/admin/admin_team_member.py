@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from dastres.models import About
+from dastres.models import TeamMembers
 from dastres.admin import SocialMediaInline
 
 
-@admin.register(About)
-class AboutAdmin(admin.ModelAdmin):
+@admin.register(TeamMembers)
+class TeamMembersAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'position')
     list_filter = ('position',)
     search_fields = ('id', 'name', 'position')

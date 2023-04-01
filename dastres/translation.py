@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from dastres.models import LandingSections, SocialMedia, About
+from dastres.models import LandingSections, SocialMedia, TeamMembers
 
 
 @register(LandingSections)
@@ -25,6 +25,6 @@ class SocialMediaTranslationOptions(TranslationOptions):
     fields = ('title', 'is_active', 'status')
 
 
-@register(About)
-class AboutTranslationOptions(TranslationOptions):
+@register(TeamMembers)
+class TeamMembersTranslationOptions(TranslationOptions):
     fields = ('name', 'position', 'is_active')

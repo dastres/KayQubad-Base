@@ -1,5 +1,9 @@
+from .serializer_base_social_media import SocialMediaBaseSerializer
+
 from .serializer_customers import CustomersSerializer
-from .serializer_about_list_deteil import AboutListDetailSerializer
+
 from .serializer_landing_sections import LandingSectionsSerializer
 
-from .serializer_base_social_media import SocialMediaBaseSerializer
+
+from .serializer_team_member_create_update import TeamMembersCreateUpdateSerializer
+from .serializer_team_member_detail import TeamMembersDetailSerializer

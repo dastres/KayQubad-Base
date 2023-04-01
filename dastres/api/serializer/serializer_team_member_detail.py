@@ -1,13 +1,13 @@
 from rest_framework import serializers
-from dastres.models import About
+from dastres.models import TeamMembers
 from dastres.api.serializer.serializer_base_social_media import SocialMediaBaseSerializer
 
 
-class AboutListDetailSerializer(serializers.ModelSerializer):
+class TeamMembersDetailSerializer(serializers.ModelSerializer):
     socials = SocialMediaBaseSerializer(many=True)
 
     class Meta:
-        model = About
+        model = TeamMembers
         fields = (
             'id', 'name', 'position', 'avatar', 'socials', 'is_active'
         )

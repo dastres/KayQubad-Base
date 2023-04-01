@@ -1,3 +1,3 @@
 from .viewset_landing_sections import LandingSectionsViewSet
 from .viewset_customers import CustomersViewSet
-from .viewset_about import AboutViewSet
+from .viewset_team_member import TeamMembersViewSet
