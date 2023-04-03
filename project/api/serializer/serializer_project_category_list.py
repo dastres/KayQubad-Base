@@ -13,7 +13,7 @@ class ListCategorySerializer(serializers.ModelSerializer):
         model = ProjectCategory
         fields = [
             'id', 'title', 'sub_category', 'slug', 'thumbnail', 'thumbnail_alt', 'status', 'is_active'
-            , 'get_created_at', 'get_updated_at', 'get_created_at_jalali',
-            'get_updated_at_jalali','meta_title','meta_description',
+            , 'get_created_at', 'get_updated_at',
+            'meta_title','meta_description',
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']

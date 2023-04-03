@@ -17,7 +17,7 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'title', 'content', 'category', 'author', 'slug', 'thumbnail', 'thumbnail_alt', 'status',
             'is_active','meta_title','meta_description',
-            'get_created_at', 'get_updated_at', 'get_created_at_jalali',
-            'get_updated_at_jalali'
+            'get_created_at', 'get_updated_at',
+
         ]
         read_only_fields = ['id', 'author', 'created_at', 'updated_at']

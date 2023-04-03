@@ -13,7 +13,6 @@ class ProjectListSerializer(serializers.ModelSerializer):
         model = Project
         fields = (
             'id', 'title', 'category', 'slug', 'thumbnail', 'thumbnail_alt', 'get_created_at', 'get_updated_at',
-            'get_created_at_jalali','meta_title','meta_description',
-            'get_updated_at_jalali'
+            'meta_title','meta_description',
         )
         read_only_fields = ['id', 'created_at', 'updated_at']
