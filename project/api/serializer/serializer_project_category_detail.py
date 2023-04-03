@@ -12,6 +12,6 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjectCategory
         fields = ['id', 'meta_title', 'meta_description', 'title', 'description', 'slug', 'sub_category', 'thumbnail',
-                  'thumbnail_alt', 'status', 'is_active', 'get_created_at', 'get_updated_at', 'get_created_at_jalali',
-                  'get_updated_at_jalali']
+                  'thumbnail_alt', 'status', 'is_active', 'get_created_at', 'get_updated_at'
+                  ]
         read_only_fields = ['id', 'author', 'created_at', 'updated_at']
