@@ -15,7 +15,7 @@ class AboutDetailSerializer(serializers.ModelSerializer):
         )
 
     def get_team_members(self, obj):
-        query = TeamMembers.objects.all()[0:3]
+        query = TeamMembers.objects.all()
         return TeamMembersDetailSerializer(query, many=True).data
 
     def get_customers(self, obj):
