@@ -11,7 +11,7 @@ class AboutDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = About
         fields = (
-            'id', 'cover_video', 'video', 'description','customers', 'is_active', 'team_members'
+            'id', 'cover_video', 'video', 'description','customers', 'is_active', 'team_members','meta_title','meta_description'
         )
 
     def get_team_members(self, obj):
