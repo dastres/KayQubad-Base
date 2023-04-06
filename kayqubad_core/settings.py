@@ -154,7 +154,7 @@ MODELTRANSLATION_DEFAULT_LANGUAGE = 'fa'
 
 # Config Object Storage
 USE_S3 = env('USE_S3')
-if USE_S3:
+if USE_S3 == 'YES':
     # settings
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
     AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
@@ -280,5 +280,3 @@ LOGGING = {
         },
     },
 }
-
-
