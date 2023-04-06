@@ -5,12 +5,12 @@ from blog.models.model_blog_post import Post
 
 @register(PostCategory)
 class PostCategoryTranslationOptions(TranslationOptions):
-    fields = ('title', 'description', 'parent_category', 'status', 'is_active')
+    fields = ('title', 'description', 'parent_category', 'status', 'is_active','meta_title','meta_description')
 
 
 @register(Post)
 class PostTranslationOptions(TranslationOptions):
-    fields = ('title', 'content', 'short_description','status', 'is_active')
+    fields = ('title', 'content', 'short_description','status', 'is_active','meta_title','meta_description')
 
 
 @register(PostComment)

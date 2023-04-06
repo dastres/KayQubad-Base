@@ -32,4 +32,4 @@ class TeamMembersTranslationOptions(TranslationOptions):
 
 @register(About)
 class AboutTranslationOptions(TranslationOptions):
-    fields = ('description','is_active')
+    fields = ('description','is_active','meta_title','meta_description')
