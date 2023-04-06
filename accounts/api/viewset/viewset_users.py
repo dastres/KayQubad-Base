@@ -1,12 +1,13 @@
 from rest_framework import viewsets
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
+from accounts import permissions as custom_permission
 from accounts.api.serializers import UserListSerializer, UserDetailSerializer, UserCreateSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
     model = get_user_model()
-    permissions = [permissions.IsAuthenticated]
+    permissions = [permissions.IsAdminUser()]
     serializer_class = UserDetailSerializer
 
     def get_queryset(self):
@@ -19,10 +20,3 @@ class UserViewSet(viewsets.ModelViewSet):
         elif self.action == 'create':
             return UserCreateSerializer
         return self.serializer_class
-
-    def get_permissions(self):
-        if self.action == 'create':
-            return [permissions.AllowAny()]
-        return super().get_permissions()
-
-
