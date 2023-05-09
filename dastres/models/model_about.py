@@ -22,7 +22,7 @@ class About(Seo, LanguageStatus):
     description = RichTextField(_('Description'))
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
     def save(self, *args, **kwargs):
         if not self.pk and About.objects.exists():
