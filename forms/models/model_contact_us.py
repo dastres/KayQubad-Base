@@ -19,4 +19,4 @@ class ContactUs(DateBasic, LanguageStatus):
     message = RichTextUploadingField(_('message'))
 
     def __str__(self):
-        return self.name
+        return self.email

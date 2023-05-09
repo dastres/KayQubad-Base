@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'modeltranslation',
 
-    'django_seed',  # TODO:for develop
-
     # my app
     'accounts.apps.AccountsConfig',
     'utils.apps.UtilsConfig',
