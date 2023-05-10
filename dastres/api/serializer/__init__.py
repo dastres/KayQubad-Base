@@ -15,3 +15,4 @@ from .serialzier_social_medai_list import SocialMediaListSerializer
 from .serialzier_social_media_create_updaet import SocialMediaCreateUpdateSerializer
 
 from .serialzier_about_detail import AboutDetailSerializer
+from .serializer_landing_to_about import LandingToAboutSerializer
