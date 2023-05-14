@@ -13,7 +13,7 @@ class LandingSections(DateBasic, Status, LanguageStatus):
         verbose_name_plural = _('Landing Sections')
 
     # Slider
-    cover_main = models.ImageField(_('Cover Main'),
+    cover_main = models.ImageField(_('Cover Main'), blank=True, null=True,
                                    upload_to=f'landing_sections/cover_main/{str(datetime.now().year)}/{str(datetime.now().month)}',
                                    )
     title_main_one = models.CharField(_('Title Main One'), max_length=100)
@@ -24,10 +24,10 @@ class LandingSections(DateBasic, Status, LanguageStatus):
     title_big = models.CharField(_('Title Big'), max_length=350)
     short_description = models.TextField(_('Short Description'))
     link = models.URLField(_('Link'))
-    cover_background = models.ImageField(_('Cover Background'),
+    cover_background = models.ImageField(_('Cover Background'), blank=True, null=True,
                                          upload_to=f'landing_sections/cover_background/{str(datetime.now().year)}/{str(datetime.now().month)}',
                                          )
-    cover_video = models.ImageField(_('Cover Video'),
+    cover_video = models.ImageField(_('Cover Video'), blank=True, null=True,
                                     upload_to=f'landing_sections/cover_video/{str(datetime.now().year)}/{str(datetime.now().month)}',
                                     )
     link_video = models.URLField(_('Link Video'))
