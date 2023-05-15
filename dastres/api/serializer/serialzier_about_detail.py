@@ -27,4 +27,4 @@ class AboutDetailSerializer(serializers.ModelSerializer):
 
     def get_landing_data(self,obj):
         query = LandingSections.objects.last()
-        return LandingToAboutSerializer(query).data
+        return LandingToAboutSerializer(    query).data
