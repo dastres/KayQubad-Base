@@ -9,5 +9,5 @@ class CreateUpdateContactUsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactUs
         fields = (
-            'name', 'email', 'phone_number', 'message', 'is_active'
+            'name', 'email', 'phone_number', 'required_services', 'message', 'is_active'
         )
