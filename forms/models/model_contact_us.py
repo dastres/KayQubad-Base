@@ -23,7 +23,7 @@ class ContactUs(DateBasic, LanguageStatus):
     email = models.EmailField(_('email'))
     phone_number = models.CharField(_('phone number'), max_length=11, validators=[phone_number_validator])
     message = RichTextUploadingField(_('message'))
-    required_services = models.CharField(_('required_services'), max_length=2,
+    required_services = models.CharField(_('required_services'), max_length=3,
                                          default=RequiredServices.SimpleTranslation,
                                          choices=RequiredServices.choices)
 
