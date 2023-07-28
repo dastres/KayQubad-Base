@@ -1,17 +1,17 @@
 services:
-  nginx:
-      image: nginx:latest
-      container_name: "nginx_dastres"
-      restart: always
-      ports:
-        - "888:888"
-      volumes:
-        - ./static:/static/
-        - ./media:/media/
-        - /var/log/dastres/nginx/:/var/log/nginx/
-        - ./nginx:/etc/nginx/conf.d
-      depends_on:
-        - app
+  # nginx:
+  #     image: nginx:latest
+  #     container_name: "nginx_dastres"
+  #     restart: always
+  #     ports:
+  #       - "888:888"
+  #     volumes:
+  #       - ./static:/static/
+  #       - ./media:/media/
+  #       - /var/log/dastres/nginx/:/var/log/nginx/
+  #       - ./nginx:/etc/nginx/conf.d
+  #     depends_on:
+  #       - app
 
   app:
     build: .
@@ -35,9 +35,9 @@ services:
     depends_on:
       - redis
 
-  redis:
-    image: 'redis:latest'
-    container_name: 'redis_dastres'
-    restart: always
-    ports:
-      - 2223:6349
+  # redis:
+  #   image: 'redis:latest'
+  #   container_name: 'redis_dastres'
+  #   restart: always
+  #   ports:
+  #     - 2223:6349
