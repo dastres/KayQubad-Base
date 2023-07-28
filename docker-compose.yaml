@@ -16,11 +16,11 @@ services:
   app:
     build: .
     container_name: 'app_dastres'
-    expose:
-      - 8000
+    ports:
+      - 3899:8000
     restart: 'always'
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     volumes:
       - .:/app/dastres/
       - ./static/:/app/dastres/static/
@@ -28,12 +28,13 @@ services:
       - /var/log/dastres:/var/log/dastres
     command:
       sh -c "
+      pip install psycopg2;
       python manage.py makemigrations;
       python manage.py migrate;
       python manage.py collectstatic --noinput;
       gunicorn --bind=0.0.0.0:8000 --timeout=90 --reload kayqubad_core.wsgi:application;"
-    depends_on:
-      - redis
+    # depends_on:
+    #   - redis
 
   # redis:
   #   image: 'redis:latest'

@@ -8,13 +8,17 @@ env = environ.Env(DEBUG=(bool, False))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+env_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(env_file):
+    environ.Env.read_env(env_file)
+else:
+    env = os.environ.get
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY', default="GhalatKardam")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
@@ -224,7 +228,7 @@ CKEDITOR_CONFIGS = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = ["DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT", ]
 # Application definition
-CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS').split(',')
+# CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS')
 
 # Config CustomUser
 if DEBUG:
