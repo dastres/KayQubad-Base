@@ -22,11 +22,11 @@ urlpatterns = i18n_patterns(
 
     # urls drf_spectacular
     path('', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/v1/schema/', SpectacularAPIView.as_view(api_version='v1'), name='schema'),
-    path('api/v1/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('schema/', SpectacularAPIView.as_view(api_version='v1'), name='schema'),
+    path('schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
     # urls api
-    path('api/v1/', include(urlpatterns_api_v1), name="api_urls"),
+    path('', include(urlpatterns_api_v1), name="api_urls"),
 
     # urls CkEditor
     path('ckeditor/', include('ckeditor_uploader.urls'), name="CKEditor_URL"),
